@@ -4,19 +4,36 @@
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        <div class="p-3 mb-3 text-bg-danger rounded-3" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
     <h1>Register</h1>
 
-    {{ form_errors(registrationForm) }}
+    {% if form_errors(registrationForm) %}
+        <div class="p-3 mb-3 text-bg-danger rounded-3">{{ form_errors(registrationForm) }}</div>
+        {% endif %}
+
+
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password',class: 'form-control'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+
+    <div class="form-group">
+        {{ form_label(registrationForm.email) }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+        <div class="mb-3 text-bg-danger rounded-3">{{ form_errors(registrationForm.email) }}</div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(registrationForm.plainPassword) }}
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+        <div class="mb-3 text-bg-danger rounded-3">{{ form_errors(registrationForm.plainPassword) }}</div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(registrationForm.agreeTerms) }}
+        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+        <div class="mb-3 text-bg-danger rounded-3">{{ form_errors(registrationForm.agreeTerms) }}</div>
+    </div>
 
         <button type="submit" class="btn btn-primary">Register</button>
     {{ form_end(registrationForm) }}

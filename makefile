@@ -39,7 +39,7 @@ git-prune-origin:
 
 git-prune-local:
 	git fetch --all
-	git checkout develop
+	git checkout master
 	git pull
 	git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -d
 
