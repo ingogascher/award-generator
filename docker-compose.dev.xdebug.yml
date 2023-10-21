@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  app:
+    volumes:
+      - ./.docker/app/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    environment:
+      DEBUGMODE: "true"
