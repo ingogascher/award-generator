@@ -5,6 +5,18 @@ WORKDIR ${WORKDIR}
 
 RUN apk update
 
+# pdftk
+RUN apk add openjdk8
+RUN wget https://gitlab.com/pdftk-java/pdftk/-/jobs/924565145/artifacts/raw/build/libs/pdftk-all.jar
+RUN mv pdftk-all.jar pdftk.jar
+
+RUN touch pdftk
+RUN echo "#!/usr/bin/env bash" > pdftk
+RUN echo "java -jar \"\$0.jar\" \"\$@\""  >> pdftk
+RUN chmod 775 pdftk*
+RUN mv pdftk* /usr/local/bin
+
+
 # Install basic packages
 RUN apk --no-cache add curl git bash jq make
 # Install nginx
