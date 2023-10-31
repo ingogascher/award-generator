@@ -1,0 +1,23 @@
+name: CI
+
+on: push
+
+jobs:
+  phpmd:
+    name: PHPMD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP environment
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run PHPMD
+        run: vendor/bin/phpmd src,tests text phpmd.xml
