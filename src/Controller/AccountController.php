@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,8 +13,11 @@ class AccountController extends AbstractController
     #[Route('/account', name: 'app_account')]
     public function index(): Response
     {
-        return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
-        ]);
+        return $this->render(
+            'account/index.html.twig',
+            [
+                'controller_name' => 'AccountController',
+            ]
+        );
     }
 }

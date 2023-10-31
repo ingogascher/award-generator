@@ -52,20 +52,28 @@ migrations-diff:
 migrations-migrate:
 	docker-compose exec app bin/console doctrine:migrations:migrate --no-interaction
 
-php-cs:
-	docker-compose exec app composer cs
+phpcs:
+	docker-compose exec app php -d memory_limit=4G vendor/bin/phpcs --standard=phpcs.xml.dist
+	#docker-compose exec app php -d memory_limit=4G vendor/bin/phpcs src -p -s --standard=PSR12 --extensions=php --error-severity=1 --warning-severity=1
 
-php-csf:
-	docker-compose exec app composer csf
+phpcbf:
+	docker-compose exec app php -d memory_limit=4G vendor/bin/phpcbf --standard=phpcs.xml.dist
 
-php-md:
-	docker-compose exec app composer phpmd
+phpmd:
+	docker-compose exec app vendor/bin/phpmd src text cleancode,codesize,controversial,design,naming,unusedcode
 
-php-stan:
-	docker-compose exec app composer phpstan
+# example: make php-version-check version='8.2' dir='src'
+php-version-check:
+	docker-compose exec app php -d memory_limit=4G vendor/bin/phpcs -p -s --error-severity=1 --warning-severity=1 --standard=PHPCompatibility --extensions=php --runtime-set testVersion $(version) $(dir)
 
-php-psalm:
-	docker-compose exec app composer psalm
+phpunit:
+	docker-compose exec app vendor/bin/phpunit --coverage-html var/testcoverage
+
+phpstan:
+	docker-compose exec app vendor/bin/phpstan analyse -c phpstan.neon
+
+psalm:
+	docker-compose exec app vendor/bin/psalm
 
 test:
 	docker-compose exec app composer test

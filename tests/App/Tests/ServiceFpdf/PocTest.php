@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ServiceFpdf;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -8,23 +10,22 @@ use mikehaertl\pdftk\Pdf;
 
 class PocTest extends KernelTestCase
 {
-
     public function testFoo()
     {
-        #global $argc, $argv;
-        #require('/var/project/vendor/setasign/fpdf/makefont/makefont.php');
-        #MakeFont('/var/project/HeronSerif-Bold.otf');
+        //global $argc, $argv;
+        //require('/var/project/vendor/setasign/fpdf/makefont/makefont.php');
+        //MakeFont('/var/project/HeronSerif-Bold.otf');
 
-        #$fontfile = '/var/project/Raleway-Regular.ttf';
-        #$output=null;
-        #$retval=null;
-        #$command = 'php /var/project/vendor/setasign/fpdf/makefont/makefont.php ' . $fontfile . ' cp1252 true true';
+        //$fontfile = '/var/project/Raleway-Regular.ttf';
+        //$output=null;
+        //$retval=null;
+        //$command = 'php /var/project/vendor/setasign/fpdf/makefont/makefont.php ' . $fontfile . ' cp1252 true true';
 
-        #exec($command, $output, $retval);
-        #echo "Returned with status $retval and output:\n";
-        #print_r($output);
+        //exec($command, $output, $retval);
+        //echo "Returned with status $retval and output:\n";
+        //print_r($output);
 
-        #return;
+        //return;
 
         $texts = [
             'Čeégf',
@@ -34,21 +35,21 @@ class PocTest extends KernelTestCase
             'Max Mausermann',
             'Test 123',
             'Hallo',
-            #'Welt',
-            #'Lorem Ipsum',
-            #'Max Mausermann',
-            #'Test 123',
+            //'Welt',
+            //'Lorem Ipsum',
+            //'Max Mausermann',
+            //'Test 123',
         ];
 
-        $font = 'Raleway';
+        $font     = 'Raleway';
         $fontSize = 8;
 
         $this->assertEquals(1, 1);
         // initiate FPDI
         $pdf = new Fpdi(unit: 'mm');
 
-        $pdf->AddFont('Saddlebag','b', 'Saddlebag-bold.php');
-        $pdf->AddFont('Raleway','', 'Raleway-Regular.php');
+        $pdf->AddFont('Saddlebag', 'b', 'Saddlebag-bold.php');
+        $pdf->AddFont('Raleway', '', 'Raleway-Regular.php');
         // add a page
         $pdf->AddPage('P', [50, 100]);
         $pdf->SetMargins(0, 0, 0);
@@ -70,7 +71,7 @@ class PocTest extends KernelTestCase
         foreach ($texts as $text) {
             $cellHeight = $this->getCellHeight($font, $fontSize);
             $pdf->SetXY(6, $yPos);
-            $pdf->Cell(40, $cellHeight , $text, 1);
+            $pdf->Cell(40, $cellHeight, $text, 1);
             $yPos += $cellHeight;
         }
 
@@ -90,16 +91,15 @@ class PocTest extends KernelTestCase
         unlink($tmp);
         $tmp = 'output' . time() . '.pdf';
         $pdf->Output($tmp, 'F', true);
-
     }
 
 
     public function testStamp()
     {
-        $name = 'test-' . time();
-        $file = $name . '.pdf';
-        $file2 = $name . '-2.pdf';
-        $stamp = $name . '-stamp.pdf';
+        $name    = 'test-' . time();
+        $file    = $name . '.pdf';
+        $file2   = $name . '-2.pdf';
+        $stamp   = $name . '-stamp.pdf';
         $stamped = $name . '-stamped.pdf';
         copy('template.pdf', $file);
 
@@ -131,17 +131,18 @@ class PocTest extends KernelTestCase
         $pdf->Output($file2, 'F', true);
 
 
-        $pdf = new Pdf($file2);
+        $pdf    = new Pdf($file2);
         $result = $pdf->stamp($stamp)
             ->saveAs('/var/project/' . $stamped);
-        if ($result === false) {
+        if (false === $result) {
             $error = $pdf->getError();
             echo $error;
         }
     }
 
 
-    private function getCellHeight(string $font, int $fontSize): int {
+    private function getCellHeight(string $font, int $fontSize): int
+    {
         return ceil($fontSize * $this->getFontFactor($font));
     }
 
