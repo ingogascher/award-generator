@@ -24,3 +24,9 @@ jobs:
 
       - name: Run PHPCS
         run: vendor/bin/phpcs --standard=phpcs.xml.dist
+
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse -c phpstan.dist.neon
+
+      - name: Run psalm
+        run: vendor/bin/psalm --config=psalm.xml
