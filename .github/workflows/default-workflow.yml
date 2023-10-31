@@ -4,7 +4,7 @@ on: push
 
 jobs:
   phpmd:
-    name: PHPMD
+    name: Quality and Codestyle
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,3 +21,6 @@ jobs:
 
       - name: Run PHPMD
         run: vendor/bin/phpmd src,tests text phpmd.xml
+
+      - name: Run PHPCS
+        run: vendor/bin/phpcs --standard=phpcs.xml.dist
