@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\ServiceFpdf;
+namespace App\Tests\Fpdf;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use setasign\Fpdi\Fpdi;
 use mikehaertl\pdftk\Pdf;
+use setasign\Fpdi\Fpdi;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PocTest extends KernelTestCase
 {
-    public function testFoo()
+    public function testFoo(): void
     {
         //global $argc, $argv;
         //require('/var/project/vendor/setasign/fpdf/makefont/makefont.php');
@@ -94,7 +94,7 @@ class PocTest extends KernelTestCase
     }
 
 
-    public function testStamp()
+    public function testStamp(): void
     {
         $name    = 'test-' . time();
         $file    = $name . '.pdf';
@@ -143,7 +143,7 @@ class PocTest extends KernelTestCase
 
     private function getCellHeight(string $font, int $fontSize): int
     {
-        return ceil($fontSize * $this->getFontFactor($font));
+        return (int)ceil($fontSize * $this->getFontFactor($font));
     }
 
     private function getFontFactor(string $font): float

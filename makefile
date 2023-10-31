@@ -54,13 +54,12 @@ migrations-migrate:
 
 phpcs:
 	docker-compose exec app php -d memory_limit=4G vendor/bin/phpcs --standard=phpcs.xml.dist
-	#docker-compose exec app php -d memory_limit=4G vendor/bin/phpcs src -p -s --standard=PSR12 --extensions=php --error-severity=1 --warning-severity=1
 
 phpcbf:
 	docker-compose exec app php -d memory_limit=4G vendor/bin/phpcbf --standard=phpcs.xml.dist
 
 phpmd:
-	docker-compose exec app vendor/bin/phpmd src text cleancode,codesize,controversial,design,naming,unusedcode
+	docker-compose exec app vendor/bin/phpmd src,tests text phpmd.xml
 
 # example: make php-version-check version='8.2' dir='src'
 php-version-check:
@@ -70,10 +69,10 @@ phpunit:
 	docker-compose exec app vendor/bin/phpunit --coverage-html var/testcoverage
 
 phpstan:
-	docker-compose exec app vendor/bin/phpstan analyse -c phpstan.neon
+	docker-compose exec app vendor/bin/phpstan analyse -c phpstan.dist.neon
 
 psalm:
-	docker-compose exec app vendor/bin/psalm
+	docker-compose exec app vendor/bin/psalm --config=psalm.xml
 
 test:
 	docker-compose exec app composer test

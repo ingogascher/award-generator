@@ -19,3 +19,9 @@ https://github.com/capgab/fpdfi
 https://www.pdflabs.com/docs/pdftk-man-page/
 
 https://github.com/mikehaertl/php-pdftk
+
+# PHPCS
+
+phpcs.xml.dist examples:
+
+https://github.com/squizlabs/PHP_CodeSniffer/blob/master/phpcs.xml.dist
