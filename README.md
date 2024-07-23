@@ -3,6 +3,8 @@
 # Symfony
 ## Secutity
 https://symfony.com/doc/current/security.html#form-login
+## Messenger
+bin/console messenger:consume async --limit=10 --memory-limit=128M --time-limit=60
 
 # Font File Generation
 http://www.fpdf.org/makefont/index.php
